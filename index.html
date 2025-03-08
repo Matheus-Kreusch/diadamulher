@@ -111,15 +111,15 @@
             if (attempts >= maxAttempts) return;
             
             let screenWidth = window.innerWidth;
-            let screenHeight = document.documentElement.clientHeight;
+            let screenHeight = window.innerHeight;
             let buttonWidth = button.offsetWidth;
             let buttonHeight = button.offsetHeight;
             
-            let newX = Math.random() * (screenWidth - buttonWidth - 40);
-            let newY = Math.random() * (screenHeight - buttonHeight - 40);
+            let newX = Math.random() * (screenWidth - buttonWidth);
+            let newY = Math.random() * (screenHeight - buttonHeight);
             
-            button.style.left = ${Math.max(20, Math.min(newX, screenWidth - buttonWidth - 20))}px;
-            button.style.top = ${Math.max(80, Math.min(newY, screenHeight - buttonHeight - 20))}px;
+            button.style.left = `${newX}px`;
+            button.style.top = `${newY}px`;
             
             attempts++;
         }
@@ -127,14 +127,14 @@
         function createHeart() {
             let heart = document.createElement("div");
             heart.classList.add("hearts");
-            heart.innerHTML = "❤";
+            heart.innerHTML = "❤️";
             document.body.appendChild(heart);
             
             let startX = Math.random() * window.innerWidth;
             let duration = Math.random() * 5 + 3;
-            heart.style.left = ${startX}px;
+            heart.style.left = `${startX}px`;
             heart.style.bottom = "0";
-            heart.style.animationDuration = ${duration}s;
+            heart.style.animationDuration = `${duration}s`;
             
             setTimeout(() => heart.remove(), duration * 1000);
         }
