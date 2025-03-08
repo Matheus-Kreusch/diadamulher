@@ -47,7 +47,7 @@
             left: 50%;
             top: 55%;
             transform: translate(-50%, -50%);
-            transition: all 0.2s ease-in-out;
+            transition: all 0.3s ease-in-out;
         }
         button:hover {
             background-color: #c2185b;
@@ -94,7 +94,7 @@
     <div id="surprise" class="hidden">
         <img src="./images.jpeg" alt="Imagem Romântica">
         <p class="msg">Parabéns! Você ganhou um vale-beijo sem data de validade!</p>
-        <audio id="loveSong" src="./romantic.mp4"></audio>
+        <audio id="loveSong" src="romantic.mp4"></audio>
     </div>
 
     <script>
@@ -110,24 +110,30 @@
         function moveButton() {
             if (attempts >= maxAttempts) return;
             
-            let screenWidth = window.innerWidth;
-            let screenHeight = window.innerHeight;
             let buttonWidth = button.offsetWidth;
             let buttonHeight = button.offsetHeight;
-            
-            let newX = Math.random() * (screenWidth - buttonWidth);
-            let newY = Math.random() * (screenHeight - buttonHeight);
-            
+
+            let screenWidth = window.innerWidth - buttonWidth;
+            let screenHeight = window.innerHeight - buttonHeight;
+
+            let newX = Math.random() * screenWidth;
+            let newY = Math.random() * screenHeight;
+
+            // Evita que o botão encoste nas bordas
+            let padding = 10; // Margem de segurança
+            newX = Math.max(padding, Math.min(newX, screenWidth - padding));
+            newY = Math.max(padding, Math.min(newY, screenHeight - padding));
+
             button.style.left = `${newX}px`;
             button.style.top = `${newY}px`;
-            
+
             attempts++;
         }
 
         function createHeart() {
             let heart = document.createElement("div");
             heart.classList.add("hearts");
-            heart.innerHTML = "❤️";
+            heart.innerHTML = "❤";
             document.body.appendChild(heart);
             
             let startX = Math.random() * window.innerWidth;
@@ -160,7 +166,7 @@
             image.style.transform = "scale(1)";
             instruction.style.opacity = "0";
             setTimeout(() => instruction.style.display = "none", 500);
-            audio.play();
+            audio.play().catch(error => console.log("Erro ao tocar áudio:", error));
         });
     </script>
 </body>
